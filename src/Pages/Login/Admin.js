@@ -27,49 +27,46 @@ function Admin({ history }) {
 
   const handleLogIn = async (data) => {
     console.log(history, "history");
+    if(emailId && password){
 
-    localStorage.setItem(
-      "admin",
-      JSON.stringify({
-        adminId: "1",
+    let values = {
+      emailId: emailId,
+      password: password,
+      admin:isAdmin,
+      doctor:isDoctor,
+      patient:isPatient
+    }
+    console.log(values);
 
-        emailId: "adijadhav88@gmail.com",
-
-        password: "1234a",
-
-
-      })
-    );
     await axios
-      .post(`${API_KEY.URL.baseurl}/${API_KEY.path.adminLogin}`, {
-        emailId: emailId,
-        password: password,
-        isAdmin:isAdmin,
-        isDoctor:isDoctor,
-        isPatient:isPatient
-      })
+      .post(`${API_KEY.URL.baseurl}/${API_KEY.path.adminLogin}`, values)
       .then((res) => {
         setData(res.data);
+        localStorage.setItem("user_details", data);
+        localStorage.setItem("admin", data);
+
         console.log(res.data);
         //save data in localStorage here
-        alert("success")
+        alert("Login successful")
+        if (isAdmin) {
+          localStorage.setItem("user", "admin");
+          history.push("/admin-home");
+        } else if (isDoctor) {
+          localStorage.setItem("user", "doctor");
+          history.push("/doctor-home");
+        } else {
+          localStorage.setItem("user", "patient");
+          history.push("/patient-home");
+        }
+        window.location.reload();
 
       })
-      .catch((err) => console.log(err));
-
-    if (isAdmin) {
-      localStorage.setItem("user", "admin");
-      history.push("/admin-home");
-    } else if (isDoctor) {
-      localStorage.setItem("user", "doctor");
-      history.push("/doctor-home");
-    } else {
-      localStorage.setItem("user", "patient");
-      history.push("/patient-home");
+      .catch((err) => {console.log(err);
+        alert("Login failed ,Please Enter valid details");
+      });
+    }else{
+      alert("enter correct email and password");
     }
-
-
-    window.location.reload();
   };
 
   const registerPatient = async () => {

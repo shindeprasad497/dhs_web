@@ -27,7 +27,7 @@ const {
 const [data, setData] = useState(null);
   useEffect(() => {
     axios
-      .get(`${API_KEY.URL.baseurl}/${API_KEY.path.hospitalById}/${id}`)
+      .get(`${API_KEY.URL.baseurl}/${API_KEY.path.doctorById}/${id}`)
       .then((res) => {
         //console.log(res);
         setData(res.data)
@@ -55,10 +55,10 @@ const [data, setData] = useState(null);
   useEffect(() => {
      axios.get(`${API_KEY.URL.baseurl}/${API_KEY.path.hospitalGetAll}`)
      //setHospital data next line
-     .then(res=>console.log(res))
+     .then(res=>{sethospitalsData(res.data);})
      .catch(err=>console.log(err))
 
-     sethospitalsData(Data);
+     
   }, [])
 
   const handleUpdate = () => {

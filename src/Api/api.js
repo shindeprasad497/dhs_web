@@ -12,6 +12,7 @@
         hospitalById:"hospital",
         hospitalSave:"hospital/save",
         doctorGetAll:"doctor/get-all",
+        doctorById:"doctor",
         doctorSave:"doctor/save",
         doctorUpdate:"doctor/update",
         hospitalUpdate:"hospital/update",
