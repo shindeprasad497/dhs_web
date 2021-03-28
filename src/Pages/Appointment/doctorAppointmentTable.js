@@ -13,8 +13,12 @@ import API_KEY from "../../Api/api";
 import axios from "axios";
 import { FaTrash, FaRegEye } from "react-icons/fa";
 import { IoIosCreate } from "react-icons/io";
+import { useHistory } from "react-router-dom";
+
 export default function DoctorAppointmentsTable({ history }) {
   const [data, setData] = useState([]);
+  history = useHistory();
+
 
   useEffect(() => {
     axios
@@ -25,7 +29,7 @@ export default function DoctorAppointmentsTable({ history }) {
   }, []);
   const handleCreateNew = () => {
     console.log(history);
-    history.push("hospital-create");
+    history.push('/book-appointment');
   };
   const  handleDelete=(id)=>{
    
