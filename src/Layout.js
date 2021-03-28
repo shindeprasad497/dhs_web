@@ -13,6 +13,7 @@ import HospitalUpdate from "./Pages/Admin/hospital/hospitalUpdate";
 import HospitalView from "./Pages/Admin/hospital/hospitalView";
 import HospitalTable from "./Pages/Admin/hospital/hospitalTable";
 import PatientRegistration from "./Pages/Login/registerPatient";
+import BookAppointment from "./Pages/Appointment/bookAppointment";
 
 export default function Layout(props) {
   const [user, setUser] = useState(null);
@@ -61,18 +62,24 @@ export default function Layout(props) {
         {/* this routes are only for doctor pages */}
 
         {user === "doctor" && (
+          <>
           <Route path="/doctor-home">
             <DoctorHome />
           </Route>
+          <Route exact path="/book-appointment" component={BookAppointment} />
+         </>
         )}
 
         {/* this routes are only for patient pages */}
 
         {user === "patient" && (
+          <>
           <Route path="/patient-home">
             <PatientHome />
           </Route>
-
+          
+          <Route exact path="/book-appointment" component={BookAppointment} />
+         </>
         )}
 
       </Switch>
