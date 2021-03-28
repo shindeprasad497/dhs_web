@@ -37,12 +37,19 @@ export default function PatientRegistration({ history }) {
       console.log(values,"values");
       alert(values.firstName);
       axios
-        .post(`${API_KEY.URL.baseurl}/${API_KEY.path.hospitalSave}`, values)
+        .post(`${API_KEY.URL.baseurl}/${API_KEY.path.patientSave}`, values)
         .then((res) => {
           console.log(res);
-          history.push(`hospital-view/${res?.data?.id}`)
+          alert("Registration Has been done, Please Login");
+          localStorage.clear();
+          history.push(`admin`)
+          window.location.reload();
         })
-        .catch((err) => console.log(err));
+        .catch((err) =>{
+            console.log(err);
+            alert("SomeThing Went Wrong");
+
+        } );
     };
 
      useEffect(() => {
