@@ -34,12 +34,12 @@ export default function PatientRegistration({ history }) {
         addharNo: aadharNo,
         password: password
       };
-      console.log(values,"values")
+      console.log(values,"values");
+      alert(values.firstName);
       axios
         .post(`${API_KEY.URL.baseurl}/${API_KEY.path.hospitalSave}`, values)
         .then((res) => {
           console.log(res);
-
           history.push(`hospital-view/${res?.data?.id}`)
         })
         .catch((err) => console.log(err));
