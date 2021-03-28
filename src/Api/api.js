@@ -1,7 +1,8 @@
  
  
- const URL = "http://localhost:8085"
- 
+//  const URL = "http://localhost:8085"
+ const URL = "https://dhs.herokuapp.com"
+
  const API_KEY = {
      URL:{
          baseurl:URL
@@ -17,7 +18,8 @@
         doctorUpdate:"doctor/update",
         hospitalUpdate:"hospital/update",
         doctorDelete:"doctor/delete",
-        hospitalDelete:"hospital/delete"
+        hospitalDelete:"hospital/delete",
+        patientSave: "patient/add"
      }
  }
 

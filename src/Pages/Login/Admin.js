@@ -180,7 +180,7 @@ function Admin({ history }) {
               </Row>
               <Row>
                 <Col>
-                  <Button onClick={() => registerPatient()} className="btn btn-link mt-3"> Register Patient</Button>
+                  <Button onClick={() => registerPatient()} className="btn-light btn btn-sm btn-link mt-3"> Register Patient</Button>
                 </Col>
               </Row>
 
