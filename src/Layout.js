@@ -61,9 +61,11 @@ export default function Layout(props) {
         {/* this routes are only for doctor pages */}
 
         {user === "doctor" && (
+          <>
           <Route path="/doctor-home">
             <DoctorHome />
           </Route>
+         </>
         )}
 
         {/* this routes are only for patient pages */}
