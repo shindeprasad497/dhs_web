@@ -19,7 +19,11 @@
         hospitalUpdate:"hospital/update",
         doctorDelete:"doctor/delete",
         hospitalDelete:"hospital/delete",
-        patientSave: "patient/add"
+        patientSave: "patient/add",
+        patientGetAll: "patient/get-all",
+        doctorApoointments: "appointment/doctor",
+        patientApoointments: "appointment/patient",
+        bookApoointments: "appointment/book"
      }
  }
 

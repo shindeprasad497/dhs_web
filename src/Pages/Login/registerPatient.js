@@ -4,6 +4,8 @@ import API_KEY from "../../Api/api";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Dropdown from 'react-overlays/Dropdown';
 import Data from "../../MockData/BloodGroups.json";
+import { useHistory } from "react-router-dom";
+
 import {
   Card,
   Button,
@@ -22,7 +24,8 @@ export default function PatientRegistration({ history }) {
     const [bloodgroups, setBloodGroups] = useState(Data);
     const [aadharNo, setAadharNo] = useState(null);    
     const [password, setPassword] = useState(null);    
-  
+    history = useHistory();
+
     const handleSave = () => {
       const values = {
         firstName: firstName,
