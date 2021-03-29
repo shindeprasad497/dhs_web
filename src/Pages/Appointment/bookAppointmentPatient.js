@@ -17,7 +17,7 @@ import {
 } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
-export default function BookAppointment({ history }) {
+export default function BookAppointmentPatient({ history }) {
   history = useHistory();
 
   const [appointmentDate, setAppointmentDate] = useState(new Date());
@@ -33,8 +33,8 @@ export default function BookAppointment({ history }) {
     const values = {
       appointmentDate: appointmentDate,
       appointmentStatus: apppoinmentStatus,
-      patientDetails: { id: parseInt(patientDetail) },
-      doctor: { id: parseInt(doctor) }
+      doctor: { id: parseInt(patientDetail) },
+      patientDetails: { id: parseInt(doctor) }
     };
     console.log(values, "values")
     axios
@@ -42,7 +42,7 @@ export default function BookAppointment({ history }) {
       .then((res) => {
         console.log(res);
         alert("Appointment Has been booked");
-        history.push(`doctor-home`)
+        history.push(`patient-home`)
       })
       .catch((err) => {
         console.log(err);
@@ -53,7 +53,7 @@ export default function BookAppointment({ history }) {
 
   useEffect(() => {
     setApppoinmentStatusAll(Data);
-    axios.get(`${API_KEY.URL.baseurl}/${API_KEY.path.patientGetAll}`)
+    axios.get(`${API_KEY.URL.baseurl}/${API_KEY.path.doctorGetAll}`)
       .then(res => setPatientDetails(res.data))
       .catch(err => console.log(err))
     console.log(patientDetails);
@@ -100,16 +100,16 @@ export default function BookAppointment({ history }) {
           <InputGroup className="mb-3">
             <InputGroup.Prepend style={{ width: "40%" }}>
               <InputGroup.Text id="basic-addon1">
-                Select Patient
+                Select Doctor
                 </InputGroup.Text>
             </InputGroup.Prepend>
 
             <FormControl
               as="select"
               custom
-              placeholder="Select Patient"
-              aria-label="Patient"
-              aria-describedby="Patient"
+              placeholder="Select Doctor"
+              aria-label="Doctor"
+              aria-describedby="basic-addon1"
               onChange={(e) => setPatientDetail(e.target.value)}
               value={patientDetail}
             >
@@ -123,7 +123,7 @@ export default function BookAppointment({ history }) {
               <Button
                 variant="secondary"
                 onClick={() => {
-                  history.push(`doctor-home`);
+                  history.push(`patient-home`);
                 }}
               >
                 Close

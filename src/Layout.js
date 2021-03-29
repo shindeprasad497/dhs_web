@@ -14,6 +14,7 @@ import HospitalView from "./Pages/Admin/hospital/hospitalView";
 import HospitalTable from "./Pages/Admin/hospital/hospitalTable";
 import PatientRegistration from "./Pages/Login/registerPatient";
 import BookAppointment from "./Pages/Appointment/bookAppointment";
+import BookAppointmentPatient from "./Pages/Appointment/bookAppointmentPatient";
 
 export default function Layout(props) {
   const [user, setUser] = useState(null);
@@ -78,7 +79,7 @@ export default function Layout(props) {
             <PatientHome />
           </Route>
           
-          <Route exact path="/book-appointment" component={BookAppointment} />
+          <Route exact path="/book-appointment-patient" component={BookAppointmentPatient} />
          </>
         )}
 
