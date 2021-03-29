@@ -63,6 +63,7 @@ export default function DoctorAppointmentsTable({ history }) {
           <tr>
             <th>Appointment ID</th>
             <th>Patient Name</th>
+            <th>Doctor Name</th>
             <th>Hospital Name</th>
             <th>Appointment Date</th>
             <th>Status</th>
@@ -74,6 +75,7 @@ export default function DoctorAppointmentsTable({ history }) {
             <tr key={`row${index}`}>
               <td>{hos?.id}</td>
               <td>{hos?.patientDetails.firstName} {hos?.patientDetails.lastName}</td>
+              <td>{hos?.doctor.firstName} {hos?.doctor.lastName}</td>
               <td>{hos?.doctor.hospital.hospitalName}</td>
               <td>{hos?.appointmentDate}</td>
               <td>{hos?.appointmentStatus}</td>
