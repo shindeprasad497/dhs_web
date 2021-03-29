@@ -29,9 +29,6 @@ export default function BookAppointment({ history }) {
   const handleSave = () => {
     let doctor = localStorage.getItem("user_id");
     console.log(doctor);
-    let admin = localStorage.getItem("admin");
-    console.log(admin);
-
 
     const values = {
       appointmentDate: appointmentDate,

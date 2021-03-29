@@ -21,8 +21,10 @@ export default function DoctorAppointmentsTable({ history }) {
 
 
   useEffect(() => {
+    let doctor = localStorage.getItem("user_id");
+
     axios
-      .get(`${API_KEY.URL.baseurl}/${API_KEY.path.hospitalGetAll}`)
+      .get(`${API_KEY.URL.baseurl}/${API_KEY.path.doctorApoointments}/${doctor}`)
       .then((res) => setData(res.data))
       .catch((err) => console.log(err));
    // setData(Data);
@@ -59,22 +61,22 @@ export default function DoctorAppointmentsTable({ history }) {
       <Table striped bordered hover variant="light">
         <thead>
           <tr>
-            <th>Sr.No</th>
-            <th> Name</th>
-            <th>Email</th>
-            <th>Contact No</th>
-            <th>Address</th>
+            <th>Appointment ID</th>
+            <th>Patient Name</th>
+            <th>Hospital Name</th>
+            <th>Appointment Date</th>
+            <th>Status</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {data.map((hos, index) => (
             <tr key={`row${index}`}>
-              <td>{index + 1}</td>
-              <td>{hos?.hospitalName}</td>
-              <td>{hos?.emailId}</td>
-              <td>{hos?.hospitalContactNo}</td>
-              <td>{hos?.hospitaladdress}</td>
+              <td>{hos?.id}</td>
+              <td>{hos?.patientDetails.firstName} {hos?.patientDetails.lastName}</td>
+              <td>{hos?.doctor.hospital.hospitalName}</td>
+              <td>{hos?.appointmentDate}</td>
+              <td>{hos?.appointmentStatus}</td>
               <td>
                 <OverlayTrigger
                   key={`delete${index}`}
