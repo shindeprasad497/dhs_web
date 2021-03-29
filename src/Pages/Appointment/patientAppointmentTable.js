@@ -50,7 +50,7 @@ export default function DoctorAppointmentsTable({ history }) {
     <Container>
       <Row style={{ padding: 10 }}>
         <Col md={1}>
-          <Button onClick={() => handleCreateNew()}>Create New</Button>
+          <Button onClick={() => handleCreateNew()}>Book Appointment</Button>
         </Col>
         <Col>
           You can see list of hospitals here, you can add, delete, view, update 
