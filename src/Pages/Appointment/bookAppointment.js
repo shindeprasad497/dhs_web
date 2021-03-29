@@ -3,7 +3,10 @@ import axios from "axios";
 import API_KEY from "../../Api/api";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Dropdown from 'react-overlays/Dropdown';
-import Data from "../../MockData/BloodGroups.json";
+import Data from "../../MockData/AppointmentStatus.json";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "./datepicker.css";
 import {
   Card,
   Button,
@@ -12,196 +15,131 @@ import {
   InputGroup,
   FormControl,
 } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+
 export default function BookAppointment({ history }) {
-    const [firstName, setFirstName] = useState(null);
-    const [lastName, setLastName] = useState(null);
-    const [email, setEmailId] = useState(null);
-    const [contactNo, setContactNo] = useState(null);
-    const [address, setAddress] = useState(null);
-    const [bloodgroup, setBloodGroup] = useState(null);
-    const [bloodgroups, setBloodGroups] = useState(Data);
-    const [aadharNo, setAadharNo] = useState(null);    
-    const [password, setPassword] = useState(null);    
-  
-    const handleSave = () => {
-      const values = {
-        firstName: firstName,
-        lastName: lastName,
-        emailId: email,
-        contactNo: contactNo,
-        address: address,
-        bloodGroup: bloodgroup,
-        addharNo: aadharNo,
-        password: password
-      };
-      console.log(values,"values")
-      axios
-        .post(`${API_KEY.URL.baseurl}/${API_KEY.path.patientSave}`, values)
-        .then((res) => {
-          console.log(res);
-          alert("Registration Has been done, Please Login");
-          localStorage.clear();
-          history.push(`admin`)
-          window.location.reload();
-        })
-        .catch((err) =>{
-            console.log(err);
-            alert("SomeThing Went Wrong");
+  history = useHistory();
 
-        } );
+  const [appointmentDate, setAppointmentDate] = useState(new Date());
+  const [apppoinmentStatus, setApppoinmentStatus] = useState(null);
+  const [apppoinmentStatusAll, setApppoinmentStatusAll] = useState(Data);
+  const [patientDetail, setPatientDetail] = useState(null);
+  const [patientDetails, setPatientDetails] = useState([]);
+
+  const handleSave = () => {
+    let doctor = localStorage.getItem("user_id");
+    console.log(doctor);
+    let admin = localStorage.getItem("admin");
+    console.log(admin);
+
+
+    const values = {
+      appointmentDate: appointmentDate,
+      AppointmentStatus: apppoinmentStatus,
+      patientDetails: { id: parseInt(patientDetail) },
+      doctor: { id: parseInt(doctor) }
     };
+    console.log(values, "values")
+    axios
+      .post(`${API_KEY.URL.baseurl}/${API_KEY.path.bookApoointments}`, values)
+      .then((res) => {
+        console.log(res);
+        alert("Appointment Has been booked");
+        history.push(`doctor-home`)
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("SomeThing Went Wrong");
 
-     useEffect(() => {
-     setBloodGroups(Data);
-     console.log(bloodgroups);
+      });
+  };
+
+  useEffect(() => {
+    setApppoinmentStatusAll(Data);
+    axios.get(`${API_KEY.URL.baseurl}/${API_KEY.path.patientGetAll}`)
+      .then(res => setPatientDetails(res.data))
+      .catch(err => console.log(err))
+    console.log(patientDetails);
+
   }, [])
-    return (
-      <div>
-        <Card>
-          <Card.Header as="h5">Patient Registration Form</Card.Header>
-          <Card.Body>
-            <Card.Title className="text-center">Patient Information</Card.Title>
-            <InputGroup className="mb-3">
-              <InputGroup.Prepend style={{ width: "40%" }}>
-                <InputGroup.Text id="basic-addon1">
-                  Enter First Name
+  return (
+    <div>
+      <Card>
+        <Card.Header as="h5">Apppoinment Booking Form</Card.Header>
+        <Card.Body>
+          <Card.Title className="text-center">Booking Information</Card.Title>
+          <InputGroup className="mb-3">
+            <InputGroup.Prepend style={{ width: "40%" }}>
+              <InputGroup.Text id="basic-addon1">
+                Enter Apppoinment Date
                 </InputGroup.Text>
-              </InputGroup.Prepend>
-              <FormControl
-                placeholder="First Name"
-                aria-label="firstName"
-                aria-describedby="basic-addon1"
-                onChange={(e) => setFirstName(e.target.value)}
-              />
-            </InputGroup>
+            </InputGroup.Prepend>
 
-            <InputGroup className="mb-3">
-              <InputGroup.Prepend style={{ width: "40%" }}>
-                <InputGroup.Text id="basic-addon1">
-                  Enter Last Name
+
+              <DatePicker selected={appointmentDate} onChange={date => setAppointmentDate(date)} />
+          </InputGroup>
+
+          <InputGroup className="mb-3">
+            <InputGroup.Prepend style={{ width: "40%" }}>
+              <InputGroup.Text id="basic-addon1">
+                Select Apppoinment Status
                 </InputGroup.Text>
-              </InputGroup.Prepend>
-              <FormControl
-                placeholder="Last Name"
-                aria-label="lastName"
-                aria-describedby="basic-addon1"
-                onChange={(e) => setLastName(e.target.value)}
-              />
-            </InputGroup>
+            </InputGroup.Prepend>
 
-            <InputGroup className="mb-3">
-              <InputGroup.Prepend style={{ width: "40%" }}>
-                <InputGroup.Text id="basic-addon1">
-                  Enter Contact No
-                </InputGroup.Text>
-              </InputGroup.Prepend>
-              <FormControl
-                placeholder="Contact No"
-                aria-label="contactNo"
-                aria-describedby="basic-addon1"
-                onChange={(e) => setContactNo(e.target.value)}
-              />
-            </InputGroup>
-  
-            <InputGroup className="mb-3">
-              <InputGroup.Prepend style={{ width: "40%" }}>
-                <InputGroup.Text id="basic-addon1">Enter Email</InputGroup.Text>
-              </InputGroup.Prepend>
-              <FormControl
-                placeholder="Email"
-                aria-label="email"
-                aria-describedby="basic-addon1"
-                onChange={(e) => setEmailId(e.target.value)}
-              />
-            </InputGroup>
-
-            <InputGroup className="mb-3">
-              <InputGroup.Prepend style={{ width: "40%" }}>
-                <InputGroup.Text id="basic-addon1">
-                  Enter Address
-                </InputGroup.Text>
-              </InputGroup.Prepend>
-              <FormControl
-                placeholder="Address"
-                aria-label="address"
-                aria-describedby="basic-addon1"
-                onChange={(e) => setAddress(e.target.value)}
-              />
-            </InputGroup>
-
-            <InputGroup className="mb-3">
-              <InputGroup.Prepend style={{ width: "40%" }}>
-                <InputGroup.Text id="basic-addon1">
-                  Select Blood Group
-                </InputGroup.Text>
-              </InputGroup.Prepend>
-
-              <FormControl
+            <FormControl
               as="select"
               custom
-              placeholder="Select Blood Group"
-              aria-label="bloodgroup"
-              aria-describedby="bloodgroup"
-              onChange={(e) => setBloodGroup(e.target.value)}
-              value={bloodgroup}
+              placeholder="Select Apppoinment Status"
+              aria-label="ApppoinmentStatus"
+              aria-describedby="basic-addon1"
+              onChange={(e) => setApppoinmentStatus(e.target.value)}
+              value={apppoinmentStatus}
             >
-                {bloodgroups.map(hos=> <option key={hos?.name}  value={hos?.name}>{hos?.name}</option>
-                )}
-             
-             
+              {apppoinmentStatusAll.map(hos => <option key={hos ?.name} value={hos ?.name}>{hos ?.name}</option>
+              )}
             </FormControl>
-            </InputGroup>
+          </InputGroup>
 
-            <InputGroup className="mb-3">
-              <InputGroup.Prepend style={{ width: "40%" }}>
-                <InputGroup.Text id="basic-addon1">
-                  Enter Aadhar No
+          <InputGroup className="mb-3">
+            <InputGroup.Prepend style={{ width: "40%" }}>
+              <InputGroup.Text id="basic-addon1">
+                Select Patient
                 </InputGroup.Text>
-              </InputGroup.Prepend>
-              <FormControl
-                placeholder="Aadhar No"
-                aria-label="aadharNo"
-                aria-describedby="basic-addon1"
-                onChange={(e) => setAadharNo(e.target.value)}
-              />
-            </InputGroup>
+            </InputGroup.Prepend>
 
-            <InputGroup className="mb-3">
-              <InputGroup.Prepend style={{ width: "40%" }}>
-                <InputGroup.Text id="basic-addon1">
-                  Enter Password
-                </InputGroup.Text>
-              </InputGroup.Prepend>
-              <FormControl
-                placeholder="Password"
-                aria-label="password"
-                type="password"
-                aria-describedby="basic-addon1"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </InputGroup>
-  
-            <Row>
-              <Col>
-                <Button
-                  variant="secondary"
-                  onClick={() => {
-                    localStorage.clear();
-                    window.location.reload();
-                    }}
-                >
-                  Close
+            <FormControl
+              as="select"
+              custom
+              placeholder="Select Patient"
+              aria-label="Patient"
+              aria-describedby="Patient"
+              onChange={(e) => setPatientDetail(e.target.value)}
+              value={patientDetail}
+            >
+              {patientDetails != null && patientDetails.map(hos => <option key={hos ?.id} value={hos ?.id}>{hos ?.firstName} {hos ?.lastName}</option>
+              )}
+            </FormControl>
+          </InputGroup>
+
+          <Row>
+            <Col>
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  history.push(`doctor-home`);
+                }}
+              >
+                Close
                 </Button>{" "}
-              </Col>
-              <Col>
-                <Button variant="primary" onClick={() => handleSave()}>
-                  Save
+            </Col>
+            <Col>
+              <Button variant="primary" onClick={() => handleSave()}>
+                Save
                 </Button>
-              </Col>
-            </Row>
-          </Card.Body>
-        </Card>
-      </div>
-    );
-  }
-  
+            </Col>
+          </Row>
+        </Card.Body>
+      </Card>
+    </div>
+  );
+}

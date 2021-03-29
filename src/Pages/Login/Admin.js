@@ -41,12 +41,14 @@ function Admin({ history }) {
     await axios
       .post(`${API_KEY.URL.baseurl}/${API_KEY.path.adminLogin}`, values)
       .then((res) => {
-        setData(res.data);
-        localStorage.setItem("user_details", data);
-        localStorage.setItem("admin", data);
 
-        console.log(res.data);
-        //save data in localStorage here
+        let admin = res.data;
+        console.log(admin.id);
+        setData(admin);
+
+        localStorage.setItem("user_id",admin.id);
+        localStorage.setItem("admin", admin);
+
         alert("Login successful")
         if (isAdmin) {
           localStorage.setItem("user", "admin");
